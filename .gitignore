@@ -10,3 +10,17 @@ models/
 *.zip
 *.log
 .cache/
+# Python
+.venv/
+__pycache__/
+*.pyc
+
+# Runtime artifacts
+uploads/
+static/uploads/
+*.log
+
+# Large model artifacts
+models/
+*.h5
+*.keras

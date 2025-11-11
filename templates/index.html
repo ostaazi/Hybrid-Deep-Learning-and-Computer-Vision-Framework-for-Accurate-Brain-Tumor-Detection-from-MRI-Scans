@@ -1,0 +1,884 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>BrainVision AI - Advanced Brain Tumor Detection</title>
+
+  <!-- Tailwind CSS -->
+  <script src="https://cdn.tailwindcss.com"></script>
+
+  <!-- Animation Libraries -->
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/animejs/3.2.1/anime.min.js"></script>
+
+  <!-- Custom Styles -->
+  <style>
+    @import url("https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800;900&display=swap");
+
+    * {
+      font-family: "Inter", sans-serif;
+    }
+
+    .hero-bg {
+      background: linear-gradient(135deg, #0f172a 0%, #1e293b 50%, #334155 100%);
+      position: relative;
+      overflow: hidden;
+    }
+
+    .hero-bg::before {
+      content: "";
+      position: absolute;
+      inset: 0;
+      background: url("data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'><defs><pattern id='grid' width='10' height='10' patternUnits='userSpaceOnUse'><path d='M 10 0 L 0 0 0 10' fill='none' stroke='%23374151' stroke-width='0.5' opacity='0.1'/></pattern></defs><rect width='100' height='100' fill='url(%23grid)'/></svg>");
+      opacity: 0.3;
+    }
+
+    .floating-element {
+      position: absolute;
+      opacity: 0.1;
+    }
+
+    .text-gradient {
+      background: linear-gradient(135deg, #06b6d4, #3b82f6);
+      -webkit-background-clip: text;
+      -webkit-text-fill-color: transparent;
+      background-clip: text;
+    }
+
+    .upload-zone {
+      border: 2px dashed #06b6d4;
+      transition: all 0.3s ease;
+    }
+
+    .upload-zone.dragover {
+      border-color: #3b82f6;
+      background-color: rgba(6, 182, 212, 0.05);
+    }
+
+    .scroll-reveal {
+      opacity: 0;
+      transform: translateY(30px);
+      transition: all 0.6s ease;
+    }
+
+    .scroll-reveal.revealed {
+      opacity: 1;
+      transform: translateY(0);
+    }
+  </style>
+</head>
+<body class="bg-gray-50 text-gray-800">
+  <!-- Navbar -->
+  <nav class="fixed top-0 w-full bg-white/90 backdrop-blur-md z-50 border-b border-gray-200">
+    <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+      <div class="flex justify-between items-center h-16">
+        <div class="flex items-center space-x-3">
+          <div
+            class="w-10 h-10 bg-gradient-to-r from-cyan-500 to-blue-600 rounded-lg flex items-center justify-center"
+          >
+            <svg
+              class="w-6 h-6 text-white"
+              fill="none"
+              stroke="currentColor"
+              viewBox="0 0 24 24"
+            >
+              <path
+                stroke-linecap="round"
+                stroke-linejoin="round"
+                stroke-width="2"
+                d="M9.75 17L9 20l-1 1h8l-1-1-.75-3M3 13h18M5 17h14a2 2 0 002-2V5a2 2 0 00-2-2H5a2 2 0 00-2 2v10a2 2 0 002 2z"
+              ></path>
+            </svg>
+          </div>
+          <span class="text-xl font-bold text-gray-900">BrainVision AI</span>
+        </div>
+        <div class="hidden md:flex items-center space-x-8">
+          <a href="#home" class="text-gray-700 hover:text-cyan-600 transition-colors">Home</a>
+          <a href="#detection" class="text-gray-700 hover:text-cyan-600 transition-colors"
+            >Detection</a
+          >
+          <a href="#about" class="text-gray-700 hover:text-cyan-600 transition-colors">About</a>
+          <a href="#contact" class="text-gray-700 hover:text-cyan-600 transition-colors">Contact</a>
+        </div>
+      </div>
+    </div>
+  </nav>
+
+  <!-- Hero Section -->
+  <section id="home" class="hero-bg min-h-screen flex items-center relative pt-16">
+    <!-- Floating elements -->
+    <div class="floating-element top-20 left-10 w-20 h-20 bg-cyan-500/10 rounded-full"></div>
+    <div
+      class="floating-element top-40 right-20 w-16 h-16 bg-blue-500/10 rounded-full"
+      style="animation-delay: -2s"
+    ></div>
+    <div
+      class="floating-element bottom-40 left-1/4 w-12 h-12 bg-teal-500/10 rounded-full"
+      style="animation-delay: -4s"
+    ></div>
+
+    <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 relative z-10">
+      <div class="grid lg:grid-cols-2 gap-12 items-center">
+        <div class="text-center lg:text-left">
+          <h1 class="text-5xl lg:text-7xl font-black text-white mb-6 leading-tight">
+            Advanced
+            <span class="text-gradient block">Brain Tumor</span>
+            Detection
+          </h1>
+          <p class="text-xl text-gray-300 mb-8 leading-relaxed">
+            Harnessing the power of deep learning and computer vision to provide accurate, fast, and
+            accessible brain tumor detection from MRI scans.
+          </p>
+          <div class="flex flex-col sm:flex-row gap-4 justify-center lg:justify-start">
+            <button
+              onclick="scrollToSection('detection')"
+              class="bg-gradient-to-r from-cyan-500 to-blue-600 text-white px-8 py-4 rounded-xl font-semibold text-lg shadow-md hover:shadow-lg transition"
+            >
+              Start Detection
+            </button>
+            <button
+              onclick="scrollToSection('about')"
+              class="border-2 border-white text-white px-8 py-4 rounded-xl font-semibold text-lg hover:bg-white hover:text-gray-900 transition-all"
+            >
+              Learn More
+            </button>
+          </div>
+        </div>
+
+        <div class="relative">
+          <div class="bg-white/10 backdrop-blur-lg rounded-2xl p-6 border border-white/20">
+            <div class="flex items-center space-x-3 mb-4">
+              <div class="w-3 h-3 bg-red-500 rounded-full"></div>
+              <div class="w-3 h-3 bg-yellow-500 rounded-full"></div>
+              <div class="w-3 h-3 bg-green-500 rounded-full"></div>
+              <span class="text-white/60 text-sm ml-2">AI Analysis</span>
+            </div>
+            <div class="bg-gray-900/50 rounded-lg p-4 mb-4">
+              <div class="text-cyan-400 text-sm font-mono">
+                <div class="mb-2">Initializing neural network...</div>
+                <div class="mb-2">Loading MRI dataset...</div>
+                <div class="mb-2">Running detection algorithm...</div>
+                <div class="text-green-400">✓ Ready for analysis</div>
+              </div>
+            </div>
+            <div class="grid grid-cols-4 gap-2 text-center text-xs">
+              <div class="bg-cyan-500/20 rounded p-2">
+                <div class="text-cyan-400 font-semibold">98.5%</div>
+                <div class="text-white/60">Accuracy</div>
+              </div>
+              <div class="bg-blue-500/20 rounded p-2">
+                <div class="text-blue-400 font-semibold">2.3s</div>
+                <div class="text-white/60">Analysis</div>
+              </div>
+              <div class="bg-teal-500/20 rounded p-2">
+                <div class="text-teal-400 font-semibold">4 Types</div>
+                <div class="text-white/60">Detection</div>
+              </div>
+              <div class="bg-purple-500/20 rounded p-2">
+                <div class="text-purple-400 font-semibold">24/7</div>
+                <div class="text-white/60">Available</div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- Detection Section -->
+  <section id="detection" class="py-20 bg-white">
+    <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+      <div class="text-center mb-16 scroll-reveal">
+        <h2 class="text-4xl lg:text-5xl font-bold text-gray-900 mb-6">AI-Powered Detection</h2>
+        <p class="text-xl text-gray-600 max-w-3xl mx-auto">
+          Upload an MRI scan and our advanced deep learning model will analyze it to detect and
+          classify brain tumors with exceptional accuracy.
+        </p>
+      </div>
+
+      <div class="grid lg:grid-cols-2 gap-12 items-start">
+        <!-- Upload / Preview -->
+        <div class="scroll-reveal">
+          <div id="uploadZone" class="upload-zone bg-gray-50 rounded-2xl p-8 text-center">
+            <div class="mb-6">
+              <svg
+                class="w-16 h-16 text-cyan-500 mx-auto mb-4"
+                fill="none"
+                stroke="currentColor"
+                viewBox="0 0 24 24"
+              >
+                <path
+                  stroke-linecap="round"
+                  stroke-linejoin="round"
+                  stroke-width="2"
+                  d="M7 16a4 4 0 01-.88-7.903A5 5 0 1115.9 6L16 6a5 5 0 011 9.9M15 13l-3-3m0 0l-3 3m3-3v12"
+                ></path>
+              </svg>
+              <h3 class="text-2xl font-semibold text-gray-900 mb-2">Upload MRI Image</h3>
+              <p class="text-gray-600">Drag and drop your MRI scan or click the button below</p>
+            </div>
+
+            <input type="file" id="mriUpload" class="hidden" accept="image/*" />
+            <button
+              id="chooseFileBtn"
+              class="bg-gradient-to-r from-cyan-500 to-blue-600 text-white px-8 py-3 rounded-xl font-semibold hover:shadow-lg transition-all"
+            >
+              Choose File
+            </button>
+
+            <div class="mt-6 text-sm text-gray-500">
+              Supported formats: JPG, PNG (preprocessed like the trained model)
+            </div>
+          </div>
+
+          <div id="previewSection" class="mt-8 hidden">
+            <div class="bg-white rounded-2xl p-6 border border-gray-200">
+              <h4 class="text-lg font-semibold text-gray-900 mb-4">Preview</h4>
+              <img id="previewImage" class="w-full rounded-lg" alt="MRI Preview" />
+              <button
+                id="analyzeBtn"
+                class="w-full mt-4 bg-gradient-to-r from-green-500 to-teal-600 text-white py-3 rounded-xl font-semibold hover:shadow-lg transition-all"
+              >
+                Analyze MRI
+              </button>
+            </div>
+          </div>
+        </div>
+
+        <!-- Detection Capabilities + Results -->
+        <div class="scroll-reveal">
+          <!-- Capabilities -->
+          <div class="bg-gradient-to-r from-blue-50 to-cyan-50 rounded-2xl p-6 mb-6">
+            <h4 class="text-xl font-semibold text-gray-900 mb-4">Detection Capabilities</h4>
+            <div class="grid grid-cols-2 gap-4 text-sm">
+              <div class="flex items-center space-x-3">
+                <div class="w-3 h-3 bg-red-500 rounded-full"></div>
+                <span class="text-gray-700">Glioma</span>
+              </div>
+              <div class="flex items-center space-x-3">
+                <div class="w-3 h-3 bg-yellow-400 rounded-full"></div>
+                <span class="text-gray-700">Meningioma</span>
+              </div>
+              <div class="flex items-center space-x-3">
+                <div class="w-3 h-3 bg-purple-500 rounded-full"></div>
+                <span class="text-gray-700">Pituitary Tumor</span>
+              </div>
+              <div class="flex items-center space-x-3">
+                <div class="w-3 h-3 bg-green-500 rounded-full"></div>
+                <span class="text-gray-700">No Tumor</span>
+              </div>
+            </div>
+          </div>
+
+          <!-- Analysis Results -->
+          <div class="bg-white rounded-2xl p-6 border border-gray-200">
+            <h4 class="text-xl font-semibold text-gray-900 mb-4">Analysis Results</h4>
+            <div id="resultsSection" class="space-y-4">
+              <div class="text-center text-gray-500 py-8">
+                <svg
+                  class="w-12 h-12 mx-auto mb-3 text-gray-400"
+                  fill="none"
+                  stroke="currentColor"
+                  viewBox="0 0 24 24"
+                >
+                  <path
+                    stroke-linecap="round"
+                    stroke-linejoin="round"
+                    stroke-width="2"
+                    d="M9 12l2 2 4-4m6 2a9 9 0 11-18 0 9 9 0 0118 0z"
+                  ></path>
+                </svg>
+                <p>Upload an MRI and click "Analyze MRI" to see detailed AI analysis.</p>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- About Section -->
+  <section id="about" class="py-20 bg-gray-50">
+    <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+      <div class="text-center mb-16 scroll-reveal">
+        <h2 class="text-4xl lg:text-5xl font-bold text-gray-900 mb-6">
+          Advanced AI Technology
+        </h2>
+        <p class="text-xl text-gray-600 max-w-3xl mx-auto">
+          Our system uses state-of-the-art deep learning algorithms trained on thousands of MRI
+          scans to provide accurate and reliable brain tumor detection.
+        </p>
+      </div>
+
+      <div class="grid md:grid-cols-3 gap-8">
+        <div class="bg-white rounded-2xl p-8 text-center shadow-sm scroll-reveal">
+          <div
+            class="w-16 h-16 bg-gradient-to-r from-cyan-500 to-blue-600 rounded-2xl flex items-center justify-center mx-auto mb-6"
+          >
+            <svg
+              class="w-8 h-8 text-white"
+              fill="none"
+              stroke="currentColor"
+              viewBox="0 0 24 24"
+            >
+              <path
+                stroke-linecap="round"
+                stroke-linejoin="round"
+                stroke-width="2"
+                d="M9.75 17L9 20l-1 1h8l-1-1-.75-3M3 13h18M5 17h14a2 2 0 002-2V5a2 2 0 00-2-2H5a2 2 0 00-2 2v10a2 2 0 002 2z"
+              ></path>
+            </svg>
+          </div>
+          <h3 class="text-2xl font-semibold text-gray-900 mb-4">Deep Learning</h3>
+          <p class="text-gray-600 leading-relaxed">
+            Convolutional Neural Networks trained on extensive MRI datasets for precise pattern
+            recognition and tumor classification.
+          </p>
+        </div>
+
+        <div class="bg-white rounded-2xl p-8 text-center shadow-sm scroll-reveal">
+          <div
+            class="w-16 h-16 bg-gradient-to-r from-green-500 to-teal-600 rounded-2xl flex items-center justify-center mx-auto mb-6"
+          >
+            <svg
+              class="w-8 h-8 text-white"
+              fill="none"
+              stroke="currentColor"
+              viewBox="0 0 24 24"
+            >
+              <path
+                stroke-linecap="round"
+                stroke-linejoin="round"
+                stroke-width="2"
+                d="M13 10V3L4 14h7v7l9-11h-7z"
+              ></path>
+            </svg>
+          </div>
+          <h3 class="text-2xl font-semibold text-gray-900 mb-4">Fast Analysis</h3>
+          <p class="text-gray-600 leading-relaxed">
+            Get results in seconds with our optimized algorithms that process MRI scans quickly
+            without compromising accuracy.
+          </p>
+        </div>
+
+        <div class="bg-white rounded-2xl p-8 text-center shadow-sm scroll-reveal">
+          <div
+            class="w-16 h-16 bg-gradient-to-r from-purple-500 to-pink-600 rounded-2xl flex items-center justify-center mx-auto mb-6"
+          >
+            <svg
+              class="w-8 h-8 text-white"
+              fill="none"
+              stroke="currentColor"
+              viewBox="0 0 24 24"
+            >
+              <path
+                stroke-linecap="round"
+                stroke-linejoin="round"
+                stroke-width="2"
+                d="M9 12l2 2 4-4m5.618-4.016A11.955 11.955 0 0112 2.944a11.955 11.955 0 01-8.618 3.04A12.02 12.02 0 003 9c0 5.591 3.824 10.29 9 11.622 5.176-1.332 9-6.03 9-11.622 0-1.042-.133-2.052-.382-3.016z"
+              ></path>
+            </svg>
+          </div>
+          <h3 class="text-2xl font-semibold text-gray-900 mb-4">High Accuracy</h3>
+          <p class="text-gray-600 leading-relaxed">
+            Achieving over 98% accuracy in tumor detection and classification through continuous
+            model improvement and validation.
+          </p>
+        </div>
+      </div>
+
+      <!-- Medical Disclaimer Card -->
+      <div class="mt-10 scroll-reveal">
+        <div
+          class="bg-amber-50 border border-amber-200 rounded-2xl p-6 md:p-8 flex flex-col md:flex-row gap-4 md:gap-6 items-start"
+        >
+          <div
+            class="w-10 h-10 rounded-full bg-amber-400 flex items-center justify-center flex-shrink-0"
+          >
+            <svg
+              class="w-6 h-6 text-white"
+              fill="none"
+              stroke="currentColor"
+              viewBox="0 0 24 24"
+            >
+              <path
+                stroke-linecap="round"
+                stroke-linejoin="round"
+                stroke-width="2"
+                d="M12 9v2m0 4h.01M4.93 19.07a10 10 0 1114.14 0A10 10 0 014.93 19.07z"
+              ></path>
+            </svg>
+          </div>
+          <div>
+            <h3 class="text-lg font-semibold text-amber-800 mb-2">
+              Medical Disclaimer
+            </h3>
+            <p class="text-amber-900 text-sm leading-relaxed">
+              This project has been created strictly for research and educational purposes to
+              support qualified medical teams in analyzing MRI scans. It is
+              <strong>not a medical device</strong> and must not be used as a replacement for
+              professional clinical judgment or diagnosis.
+            </p>
+            <p class="text-amber-900 text-sm leading-relaxed mt-2">
+              Results produced by this system are experimental and should be interpreted only by
+              trained healthcare professionals. Patients should always consult a hospital or
+              licensed physician and never rely solely on this system for any medical or treatment
+              decision.
+            </p>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- Stats Section -->
+  <section class="py-20 bg-white">
+    <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+      <div class="grid md:grid-cols-4 gap-8 text-center">
+        <div class="scroll-reveal">
+          <div
+            class="text-4xl lg:text-5xl font-black text-gradient mb-2"
+            data-count="98"
+          >
+            0
+          </div>
+          <div class="text-gray-600 font-medium">% Accuracy</div>
+        </div>
+        <div class="scroll-reveal">
+          <div class="text-4xl lg:text-5xl font-black text-gradient mb-2" data-count="2">0</div>
+          <div class="text-gray-600 font-medium">Seconds Analysis</div>
+        </div>
+        <div class="scroll-reveal">
+          <div class="text-4xl lg:text-5xl font-black text-gradient mb-2" data-count="4">0</div>
+          <div class="text-gray-600 font-medium">Tumor Types</div>
+        </div>
+        <div class="scroll-reveal">
+          <div class="text-4xl lg:text-5xl font-black text-gradient mb-2" data-count="24">0</div>
+          <div class="text-gray-600 font-medium">Hours Available</div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- Contact Section -->
+  <section id="contact" class="py-20 bg-gray-50">
+    <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+      <div class="text-center mb-12 scroll-reveal">
+        <h2 class="text-3xl lg:text-4xl font-bold text-gray-900 mb-4">
+          Contact &amp; Collaboration
+        </h2>
+        <p class="text-lg text-gray-600 max-w-2xl mx-auto">
+          For research collaboration, feedback, or technical questions about BrainVision AI,
+          you can use the contact details below.
+        </p>
+      </div>
+
+      <div class="grid md:grid-cols-2 gap-8">
+        <!-- Contact Info -->
+        <div class="bg-white rounded-2xl p-6 md:p-8 border border-gray-200 shadow-sm scroll-reveal">
+          <h3 class="text-xl font-semibold text-gray-900 mb-4">Contact Information</h3>
+          <p class="text-gray-600 text-sm mb-4">
+            Developed By Mohamed Abouelhoda.
+          </p>
+          <div class="space-y-4 text-sm">
+            <div class="flex items-start space-x-3">
+              <span class="mt-1 text-cyan-500">
+                <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                  <path
+                    stroke-linecap="round"
+                    stroke-linejoin="round"
+                    stroke-width="2"
+                    d="M16 12H8m8 0l-3 3m3-3l-3-3m9-1a9 9 0 11-18 0 9 9 0 0118 0z"
+                  ></path>
+                </svg>
+              </span>
+              <div>
+                <div class="font-medium text-gray-800">Email</div>
+                <a
+                  href="mailto:ostaaz71@gmail.com"
+                  class="text-cyan-600 hover:underline break-all"
+                  >ostaaz71@gmail.com</a
+                >
+              </div>
+            </div>
+
+            <div class="flex items-start space-x-3">
+              <span class="mt-1 text-cyan-500">
+                <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                  <path
+                    stroke-linecap="round"
+                    stroke-linejoin="round"
+                    stroke-width="2"
+                    d="M17 8l4 4m0 0l-4 4m4-4H7"
+                  ></path>
+                </svg>
+              </span>
+              <div>
+                <div class="font-medium text-gray-800">GitHub Repository</div>
+                <a
+                  href="#"
+                  class="text-cyan-600 hover:underline break-all"
+                  >https://github.com/username/brainvision-ai</a
+                >
+              </div>
+            </div>
+
+            <div class="flex items-start space-x-3">
+              <span class="mt-1 text-cyan-500">
+                <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                  <path
+                    stroke-linecap="round"
+                    stroke-linejoin="round"
+                    stroke-width="2"
+                    d="M3 5h6l2 3h10v11H3z"
+                  ></path>
+                </svg>
+              </span>
+              <div>
+                <div class="font-medium text-gray-800">AL WAKRA SECONDARY SCHOOL FOR BOYS</div>
+                <p class="text-gray-600">
+                  Qatar Research, Development and Innovation Council (QRDI)
+                </p>
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <!-- Simple Contact Message / Note -->
+        <div class="bg-white rounded-2xl p-6 md:p-8 border border-gray-200 shadow-sm scroll-reveal">
+          <h3 class="text-xl font-semibold text-gray-900 mb-4">Notes for Medical Teams</h3>
+          <p class="text-gray-600 text-sm leading-relaxed mb-4">
+            BrainVision AI is designed to support researchers and clinical teams by providing
+            fast and consistent analysis of MRI scans, while keeping the physician at the center
+            of all diagnostic and treatment decisions.
+          </p>
+          <p class="text-gray-600 text-sm leading-relaxed mb-4">
+            If you plan to integrate this model into hospital workflows or larger clinical studies,
+            we recommend discussing technical requirements, data privacy, and system integration
+            (e.g., PACS / HIS interoperability) with your IT and research teams.
+          </p>
+          <p class="text-gray-600 text-sm leading-relaxed">
+            You can customize this text completely to match your research context, thesis, or
+            institutional guidelines, and you may add phone numbers or additional contact
+            channels as needed.
+          </p>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- Footer -->
+  <footer class="bg-gray-900 text-white py-12">
+    <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+      <div class="text-center">
+        <div class="flex items-center justify-center space-x-3 mb-4">
+          <div
+            class="w-10 h-10 bg-gradient-to-r from-cyan-500 to-blue-600 rounded-lg flex items-center justify-center"
+          >
+            <svg
+              class="w-6 h-6 text-white"
+              fill="none"
+              stroke="currentColor"
+              viewBox="0 0 24 24"
+            >
+              <path
+                stroke-linecap="round"
+                stroke-linejoin="round"
+                stroke-width="2"
+                d="M9.75 17L9 20l-1 1h8l-1-1-.75-3M3 13h18M5 17h14a2 2 0 002-2V5a2 2 0 00-2-2H5a2 2 0 00-2 2v10a2 2 0 002 2z"
+              ></path>
+            </svg>
+          </div>
+          <span class="text-2xl font-bold">BrainVision AI</span>
+        </div>
+        <p class="text-gray-400 mb-6">
+          Advanced brain tumor detection using deep learning and computer vision
+        </p>
+        <div class="border-t border-gray-800 pt-6">
+          <p class="text-gray-500 text-sm">
+            © 2025 BrainVision AI Developed by M.Abouelhoda. All rights reserved. | For educational and research purposes.
+          </p>
+        </div>
+      </div>
+    </div>
+  </footer>
+
+  <!-- Scripts -->
+  <script>
+    // Smooth scroll
+    function scrollToSection(id) {
+      document.getElementById(id).scrollIntoView({ behavior: "smooth" });
+    }
+
+    // --------- Upload & Preview Elements ---------
+    const uploadZone = document.getElementById("uploadZone");
+    const fileInput = document.getElementById("mriUpload");
+    const chooseFileBtn = document.getElementById("chooseFileBtn");
+    const previewSection = document.getElementById("previewSection");
+    const previewImage = document.getElementById("previewImage");
+    const analyzeBtn = document.getElementById("analyzeBtn");
+    const resultsSection = document.getElementById("resultsSection");
+
+    let selectedFile = null;
+
+    // Prevent double file prompts
+    chooseFileBtn.addEventListener("click", () => fileInput.click());
+
+    fileInput.addEventListener("change", (e) => {
+      if (e.target.files && e.target.files[0]) {
+        handleFileUpload(e.target.files[0]);
+      }
+    });
+
+    // Drag & Drop
+    ["dragover", "dragenter"].forEach((eventName) => {
+      uploadZone.addEventListener(eventName, (e) => {
+        e.preventDefault();
+        uploadZone.classList.add("dragover");
+      });
+    });
+
+    ["dragleave", "drop"].forEach((eventName) => {
+      uploadZone.addEventListener(eventName, (e) => {
+        e.preventDefault();
+        uploadZone.classList.remove("dragover");
+      });
+    });
+
+    uploadZone.addEventListener("drop", (e) => {
+      const files = e.dataTransfer.files;
+      if (files && files[0]) {
+        handleFileUpload(files[0]);
+      }
+    });
+
+    function handleFileUpload(file) {
+      if (!file.type.startsWith("image/")) {
+        alert("Please upload an image file.");
+        return;
+      }
+      selectedFile = file;
+
+      const reader = new FileReader();
+      reader.onload = (e) => {
+        previewImage.src = e.target.result;
+        previewSection.classList.remove("hidden");
+
+        anime({
+          targets: "#previewSection",
+          opacity: [0, 1],
+          translateY: [20, 0],
+          duration: 500,
+          easing: "easeOutQuad",
+        });
+      };
+      reader.readAsDataURL(file);
+    }
+
+    // --------- /predict request to backend ---------
+    analyzeBtn.addEventListener("click", async () => {
+      if (!selectedFile) {
+        alert("Please upload an MRI image first.");
+        return;
+      }
+
+      const formData = new FormData();
+      formData.append("file", selectedFile);
+
+      const originalText = analyzeBtn.textContent;
+      analyzeBtn.textContent = "Analyzing...";
+      analyzeBtn.disabled = true;
+
+      try {
+        const response = await fetch("/predict", {
+          method: "POST",
+          body: formData,
+        });
+
+        const data = await response.json();
+        updateResultsUI(data);
+
+        document
+          .getElementById("detection")
+          .scrollIntoView({ behavior: "smooth", block: "center" });
+      } catch (err) {
+        updateResultsUI({
+          success: false,
+          error: "Network error while contacting the server.",
+        });
+      } finally {
+        analyzeBtn.textContent = originalText;
+        analyzeBtn.disabled = false;
+      }
+    });
+
+    // --------- Styling for each class ---------
+    const classStyles = {
+      glioma: {
+        titleColor: "text-red-600",
+        topBg: "bg-red-50 border border-red-200",
+        iconBg: "bg-red-500",
+        cardActive: "bg-red-50 border-red-300 text-red-700",
+      },
+      meningioma: {
+        titleColor: "text-yellow-600",
+        topBg: "bg-yellow-50 border border-yellow-200",
+        iconBg: "bg-yellow-400",
+        cardActive: "bg-yellow-50 border-yellow-300 text-yellow-700",
+      },
+      pituitary: {
+        titleColor: "text-purple-600",
+        topBg: "bg-purple-50 border border-purple-200",
+        iconBg: "bg-purple-500",
+        cardActive: "bg-purple-50 border-purple-300 text-purple-700",
+      },
+      notumor: {
+        titleColor: "text-green-600",
+        topBg: "bg-green-50 border border-green-200",
+        iconBg: "bg-green-500",
+        cardActive: "bg-green-50 border-green-300 text-green-700",
+      },
+    };
+
+    function getKeyFromLabel(label) {
+      const lower = label.toLowerCase();
+      if (lower.includes("glioma")) return "glioma";
+      if (lower.includes("meningioma")) return "meningioma";
+      if (lower.includes("pituitary")) return "pituitary";
+      if (lower.includes("no tumor")) return "notumor";
+      return "notumor";
+    }
+
+    function renderProbCard(label, key, value, activeKey) {
+      const isActive = key === activeKey;
+      const baseClass = "rounded-xl px-4 py-3 border text-center text-sm";
+      const activeClass = classStyles[key].cardActive;
+      const inactiveClass = "bg-gray-50 border-gray-200 text-gray-800";
+
+      const classes = baseClass + " " + (isActive ? activeClass : inactiveClass);
+
+      return `
+        <div class="${classes}">
+          <div class="font-semibold">${label}</div>
+          <div class="text-xs mt-1">${value.toFixed(2)}%</div>
+        </div>
+      `;
+    }
+
+    function updateResultsUI(data) {
+      if (!data || !data.success) {
+        const errorMsg = data && data.error ? data.error : "Unknown error occurred.";
+        resultsSection.innerHTML = `
+          <div class="text-center text-red-600 py-6">
+            <p class="font-semibold mb-1">Error</p>
+            <p class="text-sm">${errorMsg}</p>
+          </div>
+        `;
+        return;
+      }
+
+      const topLabel = data.top_class;
+      const confidence = Number(data.confidence || 0);
+      const probs = data.probabilities || {};
+
+      const typeKey = getKeyFromLabel(topLabel);
+      const styles = classStyles[typeKey];
+
+      const gliomaProb = Number(probs["Glioma"] || 0);
+      const meningiomaProb = Number(probs["Meningioma"] || 0);
+      const pituitaryProb = Number(probs["Pituitary Tumor"] || probs["Pituitary"] || 0);
+      const noTumorProb = Number(probs["No Tumor"] || 0);
+
+      resultsSection.innerHTML = `
+        <div class="space-y-4">
+          <div class="rounded-2xl p-6 ${styles.topBg}">
+            <div class="flex items-center justify-between">
+              <div>
+                <div class="text-sm font-medium text-gray-500 mb-1">Top Prediction</div>
+                <div class="text-2xl font-bold ${styles.titleColor}">${topLabel}</div>
+                <div class="mt-1 text-sm text-gray-600">Confidence: ${confidence.toFixed(2)}%</div>
+              </div>
+              <div class="w-12 h-12 rounded-full flex items-center justify-center text-white ${styles.iconBg}">
+                <svg class="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                  <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
+                    d="M9 12l2 2 4-4m6 2a9 9 0 11-18 0 9 9 0 0118 0z"></path>
+                </svg>
+              </div>
+            </div>
+          </div>
+
+          <div class="grid grid-cols-2 sm:grid-cols-4 gap-3 text-xs">
+            ${renderProbCard("Glioma", "glioma", gliomaProb, typeKey)}
+            ${renderProbCard("Meningioma", "meningioma", meningiomaProb, typeKey)}
+            ${renderProbCard("Pituitary", "pituitary", pituitaryProb, typeKey)}
+            ${renderProbCard("No Tumor", "notumor", noTumorProb, typeKey)}
+          </div>
+        </div>
+      `;
+
+      anime({
+        targets: "#resultsSection",
+        opacity: [0, 1],
+        translateY: [20, 0],
+        duration: 500,
+        easing: "easeOutQuad",
+      });
+    }
+
+    // Scroll reveal
+    const observerOptions = {
+      threshold: 0.1,
+      rootMargin: "0px 0px -50px 0px",
+    };
+
+    const observer = new IntersectionObserver((entries) => {
+      entries.forEach((entry) => {
+        if (entry.isIntersecting) {
+          entry.target.classList.add("revealed");
+        }
+      });
+    }, observerOptions);
+
+    document.querySelectorAll(".scroll-reveal").forEach((el) => observer.observe(el));
+
+    // Counters animation
+    function animateCounters() {
+      document.querySelectorAll("[data-count]").forEach((el) => {
+        const target = parseInt(el.dataset.count, 10);
+        anime({
+          targets: el,
+          innerHTML: [0, target],
+          duration: 2000,
+          easing: "easeOutQuad",
+          round: 1,
+        });
+      });
+    }
+
+    const statsObserver = new IntersectionObserver((entries) => {
+      entries.forEach((entry) => {
+        if (entry.isIntersecting) {
+          animateCounters();
+          statsObserver.unobserve(entry.target);
+        }
+      });
+    }, observerOptions);
+
+    const statsSection = document.querySelector(".grid.md\\:grid-cols-4");
+    if (statsSection) {
+      statsObserver.observe(statsSection);
+    }
+
+    // Floating elements animation
+    anime({
+      targets: ".floating-element",
+      translateY: [-20, 20],
+      duration: 4000,
+      easing: "easeInOutSine",
+      direction: "alternate",
+      loop: true,
+      delay: anime.stagger(1000),
+    });
+  </script>
+</body>
+</html>
